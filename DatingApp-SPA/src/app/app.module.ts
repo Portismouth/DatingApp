@@ -3,6 +3,7 @@ import { appRoutes } from './routes';
 import { AuthGuard } from './_guards/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { FileUploadModule } from 'ng2-file-upload';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -15,6 +16,12 @@ import { AlertifyService } from './_services/alertify.service';
 import { AuthService } from './_services/auth.service';
 import { UserService } from './_services/user.service';
 
+// Guards & Resolvers
+import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
+import { MemberEditResolver } from './_resolvers/member-edit.resolver';
+import { MemberListResolver } from './_resolvers/member-list.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+
 // Components
 import { AppComponent } from './app.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
@@ -26,11 +33,8 @@ import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
-import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
-import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
-import { MemberEditResolver } from './_resolvers/member-edit.resolver';
-import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -47,11 +51,13 @@ export function tokenGetter() {
     MemberEditComponent,
     MemberListComponent,
     NavComponent,
+    PhotoEditorComponent,
     RegisterComponent
   ],
   imports: [
     BrowserModule,
     BsDropdownModule.forRoot(),
+    FileUploadModule,
     FormsModule,
     HttpClientModule,
     JwtModule.forRoot({
