@@ -10,6 +10,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { NgModule } from '@angular/core';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { RouterModule } from '@angular/router';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 // Services
 import { AlertifyService } from './_services/alertify.service';
@@ -52,7 +53,8 @@ export function tokenGetter() {
     MemberListComponent,
     NavComponent,
     PhotoEditorComponent,
-    RegisterComponent
+    RegisterComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,

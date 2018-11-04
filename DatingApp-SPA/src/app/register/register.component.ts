@@ -31,26 +31,33 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.bsConfig = {
+    (this.bsConfig = {
       containerClass: 'theme-red'
-    },
-    this.createRegisterForm();
+    }),
+      this.createRegisterForm();
   }
 
   createRegisterForm() {
-    this.registerForm = this.fb.group({
-      gender: ['male'],
-      username: ['', Validators.required],
-      knownAs: ['', Validators.required],
-      dateOfBirth: [null, Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      password: [
-        '',
-        [Validators.required, Validators.minLength(4), Validators.maxLength(8)]
-      ],
-      confirmPassword: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator});
+    this.registerForm = this.fb.group(
+      {
+        gender: ['male'],
+        username: ['', Validators.required],
+        knownAs: ['', Validators.required],
+        dateOfBirth: [null, Validators.required],
+        city: ['', Validators.required],
+        country: ['', Validators.required],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.maxLength(8)
+          ]
+        ],
+        confirmPassword: ['', Validators.required]
+      },
+      { validator: this.passwordMatchValidator }
+    );
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -60,7 +67,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    if(this.registerForm.valid) {
+    if (this.registerForm.valid) {
       this.user = Object.assign({}, this.registerForm.value);
       this.authService.register(this.user).subscribe(
         () => {
@@ -69,9 +76,10 @@ export class RegisterComponent implements OnInit {
         error => {
           this.alertify.message(error);
         },
-        () => this.authService.login(this.user).subscribe(() => {
-          this.router.navigate(['/members']);
-        })
+        () =>
+          this.authService.login(this.user).subscribe(() => {
+            this.router.navigate(['/members']);
+          })
       );
     }
   }
