@@ -2,7 +2,13 @@
 import { appRoutes } from './routes';
 import { AuthGuard } from './_guards/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
-import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
+import {
+  BsDropdownModule,
+  TabsModule,
+  BsDatepickerModule,
+  PaginationModule,
+  ButtonsModule
+} from 'ngx-bootstrap';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -60,9 +66,9 @@ export function tokenGetter() {
     BrowserModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    ButtonsModule,
     FileUploadModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {
@@ -72,6 +78,8 @@ export function tokenGetter() {
       }
     }),
     NgxGalleryModule,
+    PaginationModule.forRoot(),
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     TabsModule.forRoot()
   ],
@@ -86,8 +94,6 @@ export function tokenGetter() {
     PreventUnsavedChanges,
     UserService
   ],
-  bootstrap: [
-    AppComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

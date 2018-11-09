@@ -75,6 +75,7 @@ namespace DatingApp.API.Controllers
                     uploadResult = _cloudinary.Upload (uploadParams);
                 }
             }
+
             photoForCreationDto.Url = uploadResult.Uri.ToString ();
             photoForCreationDto.PublicId = uploadResult.PublicId;
 
@@ -122,7 +123,7 @@ namespace DatingApp.API.Controllers
             return BadRequest ("Could not set photo to main");
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete ("{id}")]
         public async Task<IActionResult> DeletePhoto (int userId, int id)
         {
             if (userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
