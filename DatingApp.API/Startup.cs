@@ -69,13 +69,20 @@ namespace DatingApp.API
                     };
                 });
 
-            services.AddMvc (options => 
+            services.AddAuthorization (options =>
             {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            })
+                options.AddPolicy ("RequireAdminRole", policy => policy.RequireRole ("Admin"));
+                options.AddPolicy ("ModeratePhotoRole", policy => policy.RequireRole ("Admin", "Moderator"));
+                options.AddPolicy ("VipOnly", policy => policy.RequireRole ("VIP"));
+            });
+
+            services.AddMvc (options =>
+                {
+                    var policy = new AuthorizationPolicyBuilder ()
+                        .RequireAuthenticatedUser ()
+                        .Build ();
+                    options.Filters.Add (new AuthorizeFilter (policy));
+                })
                 .SetCompatibilityVersion (CompatibilityVersion.Version_2_1)
                 .AddJsonOptions (opt =>
                 {
@@ -84,10 +91,9 @@ namespace DatingApp.API
                 });
             services.AddCors ();
             services.Configure<CloudinarySettings> (Configuration.GetSection ("CloudinarySettings"));
-            Mapper.Reset();
+            Mapper.Reset ();
             services.AddAutoMapper ();
             services.AddTransient<Seed> ();
-            services.AddScoped<IAuthRepository, AuthRepository> ();
             services.AddScoped<IDatingRepository, DatingRepository> ();
 
             services.AddScoped<LogUserActivity> ();
@@ -120,7 +126,7 @@ namespace DatingApp.API
             }
 
             // app.UseHttpsRedirection();
-            seeder.SeedUsers();
+            seeder.SeedUsers ();
             app.UseCors (x => x.AllowAnyOrigin ().AllowAnyMethod ().AllowAnyHeader ());
             app.UseAuthentication ();
             app.UseDefaultFiles ();
